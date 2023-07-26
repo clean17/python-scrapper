@@ -34,6 +34,10 @@ soupsieve = "2.4.1"
 urllib3 = "2.0.4"
 wadllib = "1.3.6"
 zipp = "1.0.0"
+selenium = "^4.10.0"
+chromedriver-autoinstaller = "^0.6.2"
+playwright = "^1.36.0"
+webdriver-manager = "^3.9.1"
 
 
 

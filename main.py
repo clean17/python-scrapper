@@ -1,6 +1,4 @@
-from requests import get
-from bs4 import BeautifulSoup
-from extractor.wwr import extractor_wwr_jobs
+from extractor.indeed import extract_indeed_job
 
-jobs = extractor_wwr_jobs('python');
-print(jobs)
+list = extract_indeed_job('python')
+print(list)
