@@ -1,15 +1,21 @@
+from flask import Flask, render_template, request
 from extractor.indeed import extract_indeed_job
 from extractor.wwr import extractor_wwr_jobs
 
-keyword = input('please input Language?  ')
+app = Flask(__name__)
 
-wwr = extractor_wwr_jobs(keyword)
-indeed = extract_indeed_job(keyword)
-jobs = wwr + indeed
+@app.route('/')
+def hello_world():
+    return render_template('home.html', name = "merci")
 
-file = open(f"{keyword}.csv", "w")
-file.write('Position, Company, Location, URL\n')
 
-for job in jobs:
-    file.write(f"{job['position']}, {job['company']}, {job['location']}, {job['link']}\n")
-file.close()
+@app.route('/search')
+def serach():
+    keyword = request.args.get('keyword', 'not keyword')
+    indeed = extract_indeed_job(keyword)
+    wwr = extractor_wwr_jobs(keyword)
+    jobs = indeed + wwr
+    return render_template('search.html', keyword = keyword, jobs = jobs)
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', debug=True)

@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 autopep8 = "2.0.2"
 beautifulsoup4 = "4.12.2"
-blinker = "1.4"
+blinker = "^1.6.2"
 certifi = "2023.7.22"
 charset-normalizer = "3.2.0"
 cryptography = "3.4.8"
@@ -35,6 +35,8 @@ urllib3 = "2.0.4"
 wadllib = "1.3.6"
 zipp = "1.0.0"
 playwright = "^1.36.0"
+chromedriver-autoinstaller = "^0.6.2"
+flask = "^2.3.2"
 
 
 

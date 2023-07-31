@@ -32,7 +32,7 @@ def get_page_count(keyword):
 
 def extract_indeed_job(keyword):
     pages = get_page_count(keyword)
-    results = []
+    results = [] 
     print(f'Found {pages} pages')
     for pageNum in range(pages):
         base_url = "https://kr.indeed.com/jobs?q="
