@@ -3,15 +3,15 @@ from bs4 import BeautifulSoup
 
 def extractor_wwr_jobs(keyword):    
   base_url = "https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term="
+  results = []
   res = get(f'{base_url}{keyword}')
   if res.status_code != 200:
     print("request failed")
   else:
-    results = []
     html_doc = res.text
     soup = BeautifulSoup(html_doc, 'html.parser')
     job_posts = soup.select('section.jobs li')
-    job_posts.pop(-1)
+    # job_posts.pop(-1)
     for post in job_posts:
       anchors = post.find_all('a')
       if len(anchors) > 1:

@@ -12,7 +12,7 @@ def get_page_count(keyword):
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537')
         page = context.new_page()
-        res = page.goto(f"{base_url}{keyword}")
+        res = page.goto(f"{base_url}{keyword}", timeout=60000)
 
         if res.status != 200:
             print('Cant request page')
@@ -41,7 +41,7 @@ def extract_indeed_job(keyword):
             context = browser.new_context(user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537')
             page = context.new_page()
             pagenation = pageNum * 10
-            page.goto(f"{base_url}{keyword}&start={pagenation}")
+            page.goto(f"{base_url}{keyword}&start={pagenation}", timeout=60000)
             print(f"{base_url}{keyword}&start={pagenation}",'\n')
 
             soup = BeautifulSoup(page.content(), "html.parser")

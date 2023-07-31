@@ -10,15 +10,30 @@
 </head>
 
 <body>
-    <h1>Search "{{keyword}}" Result</h1>
-    {% for job in jobs %}
-    <div>
-        <span>{{job.position}}</span>
-        <span>{{job.company}}</span>
-        <span>{{job.location}}</span>
-        <a href="{{job.link}}" target="_blank">Apply now</a>
-    </div>
-    {% endfor %}
+    <main class="container">
+        <h1>Search "{{keyword}}" Result</h1>
+        <hgroup><a href="/export?keyword={{keyword}}" target="_blank">Export to file</a></hgroup>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Position</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{job.position}}</td>
+                <td>{{job.company}}</td>
+                <td>{{job.location}}</td>
+                <td><a href="{{job.link}}" target="_blank">Apply now</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
 </body>
 
 </html>
