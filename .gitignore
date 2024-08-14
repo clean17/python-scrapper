@@ -1,1 +1,5 @@
 get-pip.py
+*.html
+.idea
+.vscode
+venv
