@@ -1,46 +1,39 @@
-import requests
+import asyncio
+from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
-import json
-import pandas as pd
 
-# 스크래핑할 Instagram 페이지 URL
-url = 'https://www.instagram.com/ministry_of_justice_korea/'
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+import time
 
-# HTTP 요청 보내기
-response = requests.get(url)
+async def run(playwright):
+    url = 'https://www.instagram.com/ministry_of_justice_korea/'
+    file_name = 'instagram_playwright.html'
 
-# 페이지 콘텐츠 파싱
-soup = BeautifulSoup(response.text, 'html.parser')
+    browser = await playwright.chromium.launch()
+    # browser = await playwright.chromium.launch(headless=False)  # headless=False로 설정하면 브라우저가 보입니다.
+    page = await browser.new_page()
+    await page.goto(url)
 
-# Instagram 페이지에 포함된 JavaScript 데이터 추출
-scripts = soup.find_all('script', type="text/javascript")
+    # 주요 요소가 로드될 때까지 기다림 (예: 메인 콘텐츠나 특정 이미지가 로드될 때까지)
+#     await page.wait_for_selector('div[role="menu"]')
+    await page.wait_for_timeout(5000)  # 5000ms = 5초
 
-# 필요한 데이터를 포함하는 script 요소 찾기
-shared_data = None
-for script in scripts:
-    if 'window._sharedData =' in script.text:
-        json_data = script.text.split('window._sharedData = ')[1][:-1]
-        shared_data = json.loads(json_data)
-        break
 
-# 게시글 데이터 추출
-posts_data = []
-if shared_data:
-    # 페이지의 게시글 정보가 포함된 섹션
-    user_data = shared_data['entry_data']['ProfilePage'][0]['graphql']['user']
-    posts = user_data['edge_owner_to_timeline_media']['edges']
+    content = await page.content()
+    soup = BeautifulSoup(content, 'html.parser')
+    with open(file_name, 'w', encoding='utf-8') as f:
+        f.write(soup.prettify())
 
-    # 게시글 URL 및 기타 정보 수집
-    for post in posts:
-        node = post['node']
-        post_url = f"https://www.instagram.com/p/{node['shortcode']}/"
-        post_caption = node['edge_media_to_caption']['edges'][0]['node']['text'] if node['edge_media_to_caption']['edges'] else ''
-        post_timestamp = node['taken_at_timestamp']
-        post_likes = node['edge_liked_by']['count']
-        posts_data.append([post_url, post_caption, post_timestamp, post_likes])
+    title = await page.title()
+    print(f"HTML 소스가 '{file_name}'에 저장되었습니다.")
+    await browser.close()
 
-# DataFrame으로 변환하여 엑셀로 저장
-df = pd.DataFrame(posts_data, columns=['Post URL', 'Caption', 'Timestamp', 'Likes'])
-df.to_excel('instagram_posts.xlsx', index=False)
+async def main():
+    async with async_playwright() as playwright:
+        await run(playwright)
 
-print("Instagram 게시글 정보를 엑셀 파일로 저장했습니다.")
+asyncio.run(main()) # 비동기 이벤트 루프 시작
