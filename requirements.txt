@@ -1,14 +1,16 @@
+attrs==24.2.0
 autopep8==2.0.2
 beautifulsoup4==4.12.2
 blinker==1.4
 certifi==2023.7.22
+cffi==1.17.0
 charset-normalizer==3.2.0
-# command-not-found
 cryptography==3.4.8
-# dbus-python==1.2.18
 distro==1.7.0
-# distro-info
-# gyp
+et-xmlfile==1.1.0
+exceptiongroup==1.2.2
+greenlet==3.0.3
+h11==0.14.0
 httplib2==0.20.2
 idna==3.4
 importlib-metadata==4.6.4
@@ -19,21 +21,48 @@ lazr.restfulclient==0.14.4
 lazr.uri==1.0.6
 more-itertools==8.10.0
 netifaces==0.11.0
+numpy==1.24.4
 oauthlib==3.2.0
+openpyxl==3.1.5
+outcome==1.3.0.post0
+packaging==24.1
+pandas==2.0.3
+playwright==1.46.0
 pycodestyle==2.10.0
-# PyGObject==3.42.1
+pycparser==2.22
+pyee==11.1.0
 PyJWT==2.3.0
 pyparsing==2.4.7
-# python-apt==2.4.0+ubuntu1
+PySocks==1.7.1
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
+pytube==15.0.0
+pytz==2024.1
+pywin32-ctypes==0.2.3
 PyYAML==5.4.1
 requests==2.31.0
 SecretStorage==3.3.1
+selenium==4.23.1
 six==1.16.0
+sniffio==1.3.1
+sortedcontainers==2.4.0
 soupsieve==2.4.1
+tomli==2.0.1
+trio==0.26.2
+trio-websocket==0.11.1
+typing_extensions==4.12.2
+tzdata==2024.1
+urllib3==2.0.4
+wadllib==1.3.6
+webdriver-manager==4.0.2
+websocket-client==1.8.0
+wsproto==1.2.0
+zipp==1.0.0
+
+# dbus-python==1.2.18
+# PyGObject==3.42.1
+# python-apt==2.4.0+ubuntu1
 # systemd-python==234
 # ubuntu-advantage-tools==8001
 # ufw==0.36.1
 # unattended-upgrades==0.1
-urllib3==2.0.4
-wadllib==1.3.6
-zipp==1.0.0
