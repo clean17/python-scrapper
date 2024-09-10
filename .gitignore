@@ -3,4 +3,3 @@ get-pip.py
 .idea
 .vscode
 venv
-*html.py
