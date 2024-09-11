@@ -16,7 +16,7 @@ async def scroll_to_bottom(page):
                         clearInterval(timer);
                         resolve();
                     }
-                }, 100); // 100ms 마다 스크롤
+                }, 50);
             });
         }
     """)
@@ -25,10 +25,10 @@ async def run(playwright):
 #     browser = await playwright.chromium.launch()
     browser = await playwright.chromium.launch(headless=False)  # headless=False로 설정하면 브라우저가 보입니다.
     page = await browser.new_page()
-    await page.goto('https://www.naver.com')
-    await page.wait_for_load_state('networkidle')  # 네트워크 요청이 완전히 끝날 때까지 대기
+    await page.goto('https://blog.naver.com/PostView.naver?blogId=mojjustice&logNo=223456814936')
+#     await page.wait_for_load_state('networkidle')  # 네트워크 요청이 완전히 끝날 때까지 대기
 
-#     await scroll_to_bottom(page)
+    await scroll_to_bottom(page)
 
     content = await page.content()
     # print(content)
