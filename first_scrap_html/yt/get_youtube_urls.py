@@ -7,7 +7,7 @@ config = configparser.ConfigParser()
 # config.ini 파일 읽기
 config.read('config.ini')
 
-API_KEY = config['DEFAULT']['API_KEY']
+API_KEY = config['YOUTUBE']['API_KEY']
 CHANNEL_USERNAME = 'mojjustice01'
 API_URL_CHANNEL = 'https://www.googleapis.com/youtube/v3/channels'
 API_URL_VIDEOS = 'https://www.googleapis.com/youtube/v3/search'

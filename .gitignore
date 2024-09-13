@@ -5,3 +5,4 @@ get-pip.py
 venv
 *.ini
 *.txt
+*.png
