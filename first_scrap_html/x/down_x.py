@@ -1,6 +1,7 @@
 import asyncio
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
+import os
 
 async def scroll_to_bottom(page):
     await page.evaluate("""
@@ -36,8 +37,8 @@ async def run(playwright):
     soup = BeautifulSoup(content, 'html.parser')
 
     # <script> 태그 모두 제거
-    for script in soup.find_all('script'):
-        script.decompose()  # 해당 태그와 내용을 제거
+#     for script in soup.find_all('script'):
+#         script.decompose()  # 해당 태그와 내용을 제거
 
     # <article aria-labelledby="로 시작하는 모든 태그를 찾기
     articles = soup.find_all('article', {'aria-labelledby': True})
@@ -73,10 +74,11 @@ async def run(playwright):
             '''
             soup.head.append(style_tag)  # <head>에 <style> 추가
 
+    save_path = os.path.join('html', 'test_down_x.html')
     # 수정된 HTML을 파일로 저장
-    with open('filtered_articles.html', 'w', encoding='utf-8') as f:
+    with open(save_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
-        print(soup.prettify())
+        # print(soup.prettify())
 
     title = await page.title()
     print(f"Page title: {title}")

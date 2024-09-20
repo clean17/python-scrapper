@@ -1,6 +1,7 @@
 import asyncio
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
+import os
 
 async def scroll_to_bottom(page):
     await page.evaluate("""
@@ -83,7 +84,8 @@ async def run(playwright):
             '''
             soup.head.append(style_tag)  # <head> 태그에 <style> 추가
 
-    with open('playwright_naver.html', 'w', encoding='utf-8') as f:
+    save_path = os.path.join('html', 'playwright_naver.html')
+    with open(save_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
 
     title = await page.title()

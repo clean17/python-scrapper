@@ -10,21 +10,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 async def run(playwright):
-    url = 'https://www.instagram.com/ministry_of_justice_korea/'
+    url = 'https://www.instagram.com/p/DAIYj4CyoZv/'
     file_name = 'instagram_playwright.html'
 
-    browser = await playwright.chromium.launch()
-    # browser = await playwright.chromium.launch(headless=False)  # headless=False로 설정하면 브라우저가 보입니다.
+#     browser = await playwright.chromium.launch()
+    browser = await playwright.chromium.launch(headless=False)  # headless=False로 설정하면 브라우저가 보입니다.
     page = await browser.new_page()
     await page.goto(url)
 
-    # 주요 요소가 로드될 때까지 기다림 (예: 메인 콘텐츠나 특정 이미지가 로드될 때까지)
-#     await page.wait_for_selector('div[role="menu"]')
-    await page.wait_for_timeout(5000)  # 5000ms = 5초
-
+    await page.wait_for_timeout(3000)  # 5000ms = 5초
+    await page.screenshot(path="instagram_screenshot.png", full_page=True)
 
     content = await page.content()
     soup = BeautifulSoup(content, 'html.parser')
+
+    # <script> 태그 모두 제거
+#     for script in soup.find_all('script'):
+#         script.decompose()  # 해당 태그와 내용을 제거
+
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
 
