@@ -7,3 +7,5 @@ venv
 *.txt
 *.mp4
 *.png
+*.jpg
+html/
