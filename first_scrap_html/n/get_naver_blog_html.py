@@ -99,7 +99,7 @@ async def main():
             print(add_date)
 
             # 날짜 검증 및 HTML 다운로드
-            await download_html(log_no, add_date)
+#             await download_html(log_no, add_date)
 
         current_page += 1  # 다음 페이지로 이동
 

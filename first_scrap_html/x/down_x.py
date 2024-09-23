@@ -37,8 +37,8 @@ async def run(playwright):
     soup = BeautifulSoup(content, 'html.parser')
 
     # <script> 태그 모두 제거
-#     for script in soup.find_all('script'):
-#         script.decompose()  # 해당 태그와 내용을 제거
+    for script in soup.find_all('script'):
+        script.decompose()  # 해당 태그와 내용을 제거
 
     # <article aria-labelledby="로 시작하는 모든 태그를 찾기
     articles = soup.find_all('article', {'aria-labelledby': True})
