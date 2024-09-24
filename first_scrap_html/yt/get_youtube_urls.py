@@ -12,6 +12,7 @@ CHANNEL_USERNAME = 'mojjustice01'
 API_URL_CHANNEL = 'https://www.googleapis.com/youtube/v3/channels'
 API_URL_SEARCH = 'https://www.googleapis.com/youtube/v3/search'
 API_URL_VIDEO_DETAILS = 'https://www.googleapis.com/youtube/v3/videos'
+API_URL_COMMENTS = 'https://www.googleapis.com/youtube/v3/commentThreads'
 
 # 1. 채널 ID 가져오기
 channel_params = {
@@ -46,7 +47,7 @@ if channel_response.status_code == 200:
         # 3. videoId로 비디오 메타데이터 가져오기 (비디오 세부 정보 출력)
         for video_id in video_ids:
             video_details_params = {
-                'part': 'snippet,statistics',  # snippet과 statistics 같이 가져옴
+                'part': 'snippet,statistics',
                 'id': video_id,
                 'key': API_KEY
             }
@@ -60,8 +61,8 @@ if channel_response.status_code == 200:
                 video_title = snippet['title']
                 video_description = snippet['description']
                 video_publish_date = snippet['publishedAt']
-                like_count = statistics.get('likeCount', 'N/A')  # 좋아요 수가 없으면 N/A
-                view_count = statistics.get('viewCount', 'N/A')  # 조회수
+                like_count = statistics.get('likeCount', 'N/A')
+                view_count = statistics.get('viewCount', 'N/A')
 
                 print(f"Title: {video_title}")
                 print(f"Description: {video_description}")
@@ -70,8 +71,30 @@ if channel_response.status_code == 200:
                 print(f"View Count: {view_count}")
                 print(f"URL: https://www.youtube.com/watch?v={video_id}")
                 print("-" * 40)
-            else:
-                print(f"Error fetching video details for {video_id}: {video_details_response.status_code}")
+
+                # 4. 댓글 정보 가져오기
+                comments_params = {
+                    'part': 'snippet',
+                    'videoId': video_id,
+                    'key': API_KEY,
+                    'maxResults': 10  # 원하는 댓글 수 설정
+                }
+
+                comments_response = requests.get(API_URL_COMMENTS, params=comments_params)
+                if comments_response.status_code == 200:
+                    comments_data = comments_response.json().get('items', [])
+                    for comment in comments_data:
+                        comment_text = comment['snippet']['topLevelComment']['snippet']['textDisplay']
+                        comment_author = comment['snippet']['topLevelComment']['snippet']['authorDisplayName']
+                        comment_like_count = comment['snippet']['topLevelComment']['snippet']['likeCount']
+                        comment_published_at = comment['snippet']['topLevelComment']['snippet']['publishedAt']
+
+                        print(f"Comment by {comment_author} ({comment_published_at}):")
+                        print(f"{comment_text}")
+                        print(f"Likes: {comment_like_count}")
+                        print("-" * 40)
+                else:
+                    print(f"Error fetching comments for {video_id}: {comments_response.status_code}")
     else:
         print(f"Error fetching videos: {video_response.status_code}")
 else:
