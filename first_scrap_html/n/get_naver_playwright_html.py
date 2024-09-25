@@ -56,6 +56,44 @@ async def run(playwright):
     # <div id="postListBody">를 찾기
     post_list_body = soup.find('div', id='postListBody')
 
+    # 2. 좋아요 수 추출 (class="u_cnt _count")
+    like_count_tag = post_list_body.find('span', class_='u_cnt _count')
+    if like_count_tag:
+        like_count = like_count_tag.get_text()
+        print(f"Likes: {like_count}")
+
+    # 3. 해시태그 추출 (해시태그는 #이 앞에 붙은 글자)
+    hashtags = []
+    for tag in post_list_body.find_all('a', href=True):  # 해시태그가 a 태그에 있는 경우로 가정
+        if tag.get_text().startswith('#'):
+            hashtags.append(tag.get_text())
+
+    print(f"Hashtags: {', '.join(hashtags)}")
+
+#     # 4. 타이틀 추출 (class="se-title-text" 내부의 텍스트)
+#     title_tag = post_list_body.find('span', class_='se-title-text')
+#     if title_tag:
+#         title = title_tag.get_text()
+#         print(f"Title: {title}")
+
+    # 5. 작성자 추출 (class="nick" 내부 텍스트)
+    author_tag = post_list_body.find('span', class_='nick')
+    if author_tag:
+        author = author_tag.get_text()
+        print(f"Author: {author}")
+
+    # 6. 본문 텍스트 추출
+    main_container = post_list_body.find('div', class_='se-main-container')
+    """ if main_container:
+        content_text = main_container.get_text(strip=True)
+        print(f"Content: {content_text}") """
+    if main_container:
+        span_tags = main_container.find_all('span')
+        for span in span_tags:
+            content_text = span.get_text(strip=True)
+            print(content_text)
+
+
     if post_list_body:
         # <body> 태그 찾기
         body_tag = soup.find('body')
@@ -89,7 +127,11 @@ async def run(playwright):
         f.write(soup.prettify())
 
     title = await page.title()
-    print(f"Page title: {title}")
+
+    # : 뒤의 내용 제거
+    cleaned_title = title.split(':')[0]
+    print(f"Page title: {cleaned_title}")
+
     await browser.close()
 
 async def main():
