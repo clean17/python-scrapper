@@ -9,6 +9,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import time
+import configparser
+
+config.read('config.ini')
+
+UESRNAME = config['INSTAGRAM']['UESRNAME']
+PASSWORD = config['INSTAGRAM']['PASSWORD']
 
 async def run(playwright):
     # 인스타그램 로그인 페이지
@@ -17,8 +23,8 @@ async def run(playwright):
         file_name = 'instagram_playwright.html'
 
         # Instagram 계정 정보
-        instagram_username = "inu240920"
-        instagram_password = "!Pass9900"
+        instagram_username = UESRNAME
+        instagram_password = PASSWORD
 
         # 브라우저 실행 (headless=False로 설정하면 브라우저가 보임)
         browser = await playwright.chromium.launch(headless=False)

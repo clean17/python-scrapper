@@ -17,7 +17,7 @@ async def scroll_to_bottom(page):
                         clearInterval(timer);
                         resolve();
                     }
-                }, 40);
+                }, 100);
             });
         }
     """)

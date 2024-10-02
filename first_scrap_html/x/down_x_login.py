@@ -2,6 +2,12 @@ import asyncio
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 import os
+import configparser
+
+config.read('config.ini')
+
+UESRNAME = config['X']['UESRNAME']
+PASSWORD = config['X']['PASSWORD']
 
 async def scroll_to_bottom(page):
     await page.evaluate("""
@@ -17,7 +23,7 @@ async def scroll_to_bottom(page):
                         clearInterval(timer);
                         resolve();
                     }
-                }, 40);
+                }, 100);
             });
         }
     """)
@@ -29,8 +35,8 @@ async def run(playwright):
     file_name = 'test2_down_x.html'
 
     # X 계정 정보 (예시, 실제 로그인 정보 사용)
-    x_username = "inu240920"
-    x_password = "!Pass9900"
+    x_username = LOGIN_ID
+    x_password = PASSWORD
 
     # 브라우저 실행 (headless=False로 설정하면 브라우저가 보입니다)
     browser = await playwright.chromium.launch(headless=False)
