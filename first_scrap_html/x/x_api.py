@@ -1,4 +1,4 @@
-import tweepy
+import requests
 import configparser
 
 # configparser 초기화
@@ -7,44 +7,41 @@ config = configparser.ConfigParser()
 # config.ini 파일 읽기
 config.read('config.ini')
 
-API_KEY = config['X']['API_KEY']
-API_KEY_SECRET = config['X']['API_KEY_SECRET']
-ACCESS_TOKEN = config['X']['ACCESS_TOKEN']
-ACCESS_TOKEN_SECRET = config['X']['ACCESS_TOKEN_SECRET']
+# API_KEY = config['X']['API_KEY']
+# API_KEY_SECRET = config['X']['API_KEY_SECRET']
+# ACCESS_TOKEN = config['X']['ACCESS_TOKEN']
+# ACCESS_TOKEN_SECRET = config['X']['ACCESS_TOKEN_SECRET']
 BEARER_TOKEN = config['X']['BEARER_TOKEN']
 
 
 # API 키와 토큰 설정
-consumer_key = 'YOUR_CONSUMER_KEY'
-consumer_secret = 'YOUR_CONSUMER_SECRET'
-access_token = 'YOUR_ACCESS_TOKEN'
-access_token_secret = 'YOUR_ACCESS_TOKEN_SECRET'
-consumer_key = API_KEY
-consumer_secret = API_KEY_SECRET
+# consumer_key = API_KEY
+# consumer_secret = API_KEY_SECRET
+# access_token = ACCESS_TOKEN
+# access_token_secret = ACCESS_TOKEN_SECRET
 bearer_token = BEARER_TOKEN
-access_token = ACCESS_TOKEN
-access_token_secret = ACCESS_TOKEN_SECRET
 
-'''
-# 트위터 API 인증
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
 
-# 특정 공공기관의 트윗 가져오기
-public_tweets = api.user_timeline(screen_name='public_institution_handle', count=10)
-public_tweets = api.user_timeline(screen_name='happymoj', count=10)
+# 요청 URL
+url = "https://api.twitter.com/2/users/61355799/tweets"
+params = {
+    'tweet.fields': 'attachments,created_at,public_metrics,text,conversation_id',
+    'media.fields': 'media_key,type,url',
+    'expansions': 'attachments.media_keys',
+    'max_results': '100',
+    'pagination_token': '7140dibdnow9c7btw452upzcm8psphs6gh7hr6lsotzxz'
+}
 
-# 트윗 출력
-for tweet in public_tweets:
-    print(tweet.text)
-'''
+# 헤더 설정
+headers = {
+    'Authorization': f'Bearer {bearer_token}'
+}
 
-client = tweepy.Client(bearer_token=bearer_token)
+# 요청 보내기
+response = requests.get(url, headers=headers, params=params)
 
-response = client.get_users_tweets(id='happymoj', max_results=10)
-
-# 트윗 출력
-for tweet in public_tweets:
-    for tweet in response.data:
-        print(tweet.text)
+# 결과 출력
+if response.status_code == 200:
+    print(response.json())
+else:
+    print(f"Error: {response.status_code} - {response.text}")
