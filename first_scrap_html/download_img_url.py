@@ -21,8 +21,9 @@ def download_image(url, post_key, image_index):
 
 # 이미지 URL
 image_url = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.29350-15/461157166_3300053360127164_4550902849778238088_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=18de74&_nc_ohc=2PF1ila3LBkQ7kNvgHJw5es&_nc_ht=scontent-ssn1-1.cdninstagram.com&edm=ANo9K5cEAAAA&_nc_gid=APg-kIAMf2HC2htf3j09cCR&oh=00_AYBFQD4Dog5nAvdO9efLZK94Vys6ZGl_UFMxLZgnEnneXA&oe=66FC23F4'
+image_url = 'https://pbs.twimg.com/media/FyE8TkRagAAK7o1.jpg'
 # 저장할 파일명
-key = 'xxzl2n1_bd1'
+key = '241007'
 image_index = 0
 
 # 이미지 다운로드
