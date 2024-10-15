@@ -1,13 +1,12 @@
 import asyncio
 import json
 import os
-import re
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from playwright.async_api import async_playwright
 from urllib.parse import unquote
-
+import re
 
 async def scroll_to_bottom(page):
     await page.evaluate("""
@@ -94,25 +93,22 @@ async def run(playwright, log_no):
 
     # 빈칸으로 처리할 유니코드 공백 문자 목록
     EMPTY_CHARACTERS = ['\u200B', '\u200C', '\u200D']  # zero-width space, zero-width non-joiner, etc.
-    # <p>와 <span> 태그 중 텍스트 콘텐츠가 비어있는 경우 또는 특수 문자가 있는 경우 제거
+
+    # <p>와 <span> 태그 중 텍스트 콘텐츠에서 중복 공백을 줄이는 처리
     for tag in soup.find_all(['p', 'span']):
-        # 태그 내 텍스트 가져오기 (strip=True로 공백 제거)
-        text_content = tag.get_text(strip=True)
+        # 태그 내 텍스트 가져오기
+        text_content = tag.get_text()
 
-        # 빈 문자(&zerowidthspace 등) 제거를 위해 유니코드 공백 문자를 모두 제거
-        # for empty_char in EMPTY_CHARACTERS:
-        #     text_content = text_content.replace(empty_char, '')
+        # 유니코드 공백 문자 제거
+        for empty_char in EMPTY_CHARACTERS:
+            text_content = text_content.replace(empty_char, '')
 
-        # 중복된 공백 및 줄바꿈 문자를 하나의 공백으로 변환
+        # 중복된 공백 및 줄바꿈을 하나의 공백으로 변환
         # \s+는 공백(스페이스, 탭, 줄바꿈)을 포함한 모든 공백 문자를 의미
-        text_content = re.sub(r'\s+', ' ', text_content)
+        text_content = re.sub(r'\s+', ' ', text_content).strip()
 
-        # 텍스트가 완전히 비어있는 경우 태그 제거
-        if not text_content:
-            tag.decompose()
-        # else:
-            # 공백을 줄인 후 다시 태그의 텍스트 설정
-            # tag.string = text_content
+        # 공백을 정리한 텍스트로 태그의 내용을 업데이트
+        tag.string = text_content
 
     post_list_body = soup.find('div', id='postListBody')
 
