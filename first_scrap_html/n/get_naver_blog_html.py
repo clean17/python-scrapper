@@ -8,7 +8,7 @@ from urllib.parse import unquote
 
 # 네이버 블로그 API 호출 및 데이터 처리
 def fetch_post_data(blog_id, current_page):
-    url = f'https://blog.naver.com/PostTitleListAsync.naver?blogId={blog_id}&currentPage={current_page}&countPerPage=5'
+    url = f'https://blog.naver.com/PostTitleListAsync.naver?blogId={blog_id}&currentPage={current_page}&countPerPage=30'
     response = requests.get(url)
 
     if response.status_code == 200:

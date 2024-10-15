@@ -8,7 +8,7 @@ async def scroll_to_bottom(page):
         async () => {
             await new Promise((resolve) => {
                 let totalHeight = 0;
-                const distance = 100; // 스크롤하는 거리
+                const distance = 150; // 스크롤하는 거리
                 const timer = setInterval(() => {
                     window.scrollBy(0, distance);
                     totalHeight += distance;
@@ -17,7 +17,7 @@ async def scroll_to_bottom(page):
                         clearInterval(timer);
                         resolve();
                     }
-                }, 100);
+                }, 300);
             });
         }
     """)
@@ -26,7 +26,6 @@ async def run(playwright):
     #     browser = await playwright.chromium.launch()
     browser = await playwright.chromium.launch(headless=False)  # headless=False로 설정하면 브라우저가 보입니다.
     page = await browser.new_page()
-    await page.goto('https://blog.naver.com/PostView.naver?blogId=mojjustice&logNo=223456814936')
     await page.goto('https://blog.naver.com/PostView.naver?blogId=mojjustice&logNo=223579226685')
     #     await page.wait_for_load_state('networkidle')  # 네트워크 요청이 완전히 끝날 때까지 대기 - 스켈레톤으로 나온다
 
@@ -69,12 +68,6 @@ async def run(playwright):
             hashtags.append(tag.get_text())
 
     print(f"Hashtags: {', '.join(hashtags)}")
-
-#     # 4. 타이틀 추출 (class="se-title-text" 내부의 텍스트)
-#     title_tag = post_list_body.find('span', class_='se-title-text')
-#     if title_tag:
-#         title = title_tag.get_text()
-#         print(f"Title: {title}")
 
     # 5. 작성자 추출 (class="nick" 내부 텍스트)
     author_tag = post_list_body.find('span', class_='nick')
@@ -121,6 +114,10 @@ async def run(playwright):
             }
             '''
             soup.head.append(style_tag)  # <head> 태그에 <style> 추가
+
+    # 디렉토리가 없으면 생성
+    if not os.path.exists('html'):
+        os.makedirs('html')
 
     save_path = os.path.join('html', 'playwright_naver.html')
     with open(save_path, 'w', encoding='utf-8') as f:
