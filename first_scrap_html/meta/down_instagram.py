@@ -11,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 import configparser
 
+config = configparser.ConfigParser()
+
 config.read('config.ini')
 
 UESRNAME = config['INSTAGRAM']['UESRNAME']
