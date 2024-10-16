@@ -1,3 +1,7 @@
+aiohappyeyeballs==2.4.3
+aiohttp==3.10.10
+aiosignal==1.3.1
+async-timeout==4.0.3
 attrs==24.2.0
 autopep8==2.0.2
 beautifulsoup4==4.12.2
@@ -10,6 +14,8 @@ cryptography==3.4.8
 distro==1.7.0
 et-xmlfile==1.1.0
 exceptiongroup==1.2.2
+ffmpeg==1.4
+frozenlist==1.4.1
 greenlet==3.0.3
 h11==0.14.0
 httplib2==0.20.2
@@ -21,6 +27,7 @@ launchpadlib==1.10.16
 lazr.restfulclient==0.14.4
 lazr.uri==1.0.6
 more-itertools==8.10.0
+multidict==6.1.0
 mutagen==1.47.0
 netifaces==0.11.0
 numpy==1.24.4
@@ -30,6 +37,7 @@ outcome==1.3.0.post0
 packaging==24.1
 pandas==2.0.3
 playwright==1.46.0
+propcache==0.2.0
 pycodestyle==2.10.0
 pycparser==2.22
 pycryptodomex==3.20.0
@@ -44,6 +52,7 @@ pytz==2024.1
 pywin32-ctypes==0.2.3
 PyYAML==5.4.1
 requests==2.32.3
+requests-oauthlib==1.3.1
 SecretStorage==3.3.1
 selenium==4.23.1
 six==1.16.0
@@ -53,15 +62,16 @@ soupsieve==2.4.1
 tomli==2.0.1
 trio==0.26.2
 trio-websocket==0.11.1
+tweepy==4.14.0
 typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.0.4
 wadllib==1.3.6
 webdriver-manager==4.0.2
 websocket-client==1.8.0
-websockets==13.0.1
+websockets==13.1
 wsproto==1.2.0
-youtube-dl==2021.12.17
+yarl==1.15.2
 yt-dlp==2024.8.6
 zipp==1.0.0
 
