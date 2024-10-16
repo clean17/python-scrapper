@@ -72,7 +72,7 @@ if channel_response.status_code == 200:
                 print(f"URL: https://www.youtube.com/watch?v={video_id}")
                 print("-" * 40)
 
-                # 4. 댓글 정보 가져오기
+                """ # 4. 댓글 정보 가져오기
                 comments_params = {
                     'part': 'snippet',
                     'videoId': video_id,
@@ -94,7 +94,7 @@ if channel_response.status_code == 200:
                         print(f"Likes: {comment_like_count}")
                         print("-" * 40)
                 else:
-                    print(f"Error fetching comments for {video_id}: {comments_response.status_code}")
+                    print(f"Error fetching comments for {video_id}: {comments_response.status_code}") """
     else:
         print(f"Error fetching videos: {video_response.status_code}")
 else:

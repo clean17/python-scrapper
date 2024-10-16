@@ -113,6 +113,14 @@ async def run(playwright, log_no):
         author = author_tag.get_text()
         print(f"Author: {author}")
 
+    # 6. 본문 텍스트 추출
+    main_container = post_list_body.find('div', class_='se-main-container')
+    if main_container:
+        span_tags = main_container.find_all('span')
+        for span in span_tags:
+            content_text = span.get_text(strip=True)
+            print(content_text)
+
     if post_list_body:
         # <body> 태그 찾기
         body_tag = soup.find('body')
