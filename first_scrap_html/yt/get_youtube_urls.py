@@ -16,7 +16,6 @@ API_URL_COMMENTS = 'https://www.googleapis.com/youtube/v3/commentThreads'
 
 # 1. 채널 ID 가져오기
 channel_params = {
-    'part': 'id',
     'forUsername': CHANNEL_USERNAME,
     'key': API_KEY
 }
@@ -26,6 +25,7 @@ if channel_response.status_code == 200:
     channel_data = channel_response.json()
     channel_id = channel_data['items'][0]['id']
     print(f"Channel ID: {channel_id}")
+    nextPageToken = ''
 
     # 2. 채널의 동영상 목록 가져오기 (videoId 리스트로 저장)
     video_params = {
@@ -34,7 +34,8 @@ if channel_response.status_code == 200:
         'maxResults': 100,
         'order': 'date',
         'type': 'video',
-        'key': API_KEY
+        'pageToken': nextPageToken
+        'key': API_KEY,
     }
 
     video_response = requests.get(API_URL_SEARCH, params=video_params)
