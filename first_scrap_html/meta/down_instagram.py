@@ -32,6 +32,7 @@ async def run(playwright):
         browser = await playwright.chromium.launch(headless=False)
         page = await browser.new_page()
 
+        '''
         # 로그인 페이지로 이동
         await page.goto(login_url)
         await page.wait_for_timeout(2000)  # 페이지 로딩 대기
@@ -45,6 +46,7 @@ async def run(playwright):
 
         # 로그인 후 페이지 로딩 대기 (2단계 인증 등 다른 팝업이 있을 수 있으므로 wait_for_navigation 사용 가능)
         await page.wait_for_timeout(5000)  # 로그인 과정 대기
+        '''
 
         # 로그인 후 특정 페이지로 이동
         await page.goto(target_url)
@@ -56,6 +58,14 @@ async def run(playwright):
         # 페이지의 HTML 내용 가져오기
         content = await page.content()
         soup = BeautifulSoup(content, 'html.parser')
+
+        body = soup.body
+        await asyncio.sleep(2)
+
+        # body 하위 직속 div 요소들 찾기
+        top_level_divs = body.find_all('div', recursive=False)
+        if top_level_divs:
+            top_level_divs[-1].decompose()
 
         # HTML 파일로 저장
         save_path = os.path.join('html', file_name)
