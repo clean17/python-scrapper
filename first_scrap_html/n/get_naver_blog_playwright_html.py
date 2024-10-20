@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from playwright.async_api import async_playwright
 from urllib.parse import unquote
-import re
+
 
 async def scroll_to_bottom(page):
     await page.evaluate("""
