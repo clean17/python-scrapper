@@ -65,7 +65,7 @@ async def run(playwright):
         # body 하위 직속 div 요소들 찾기
         top_level_divs = body.find_all('div', recursive=False)
         if top_level_divs:
-            top_level_divs[-1].decompose()
+            top_level_divs[-1].decompose() # decompose 메모리에서 완전 삭제, extract 트리에서만 삭제 반환 가능
 
         # HTML 파일로 저장
         save_path = os.path.join('html', file_name)
