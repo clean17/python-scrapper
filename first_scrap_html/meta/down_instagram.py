@@ -29,7 +29,7 @@ async def run(playwright):
         instagram_password = PASSWORD
 
         # 브라우저 실행 (headless=False로 설정하면 브라우저가 보임)
-        browser = await playwright.chromium.launch(headless=False)
+        browser = await playwright.chromium.launch(headless=True)
         page = await browser.new_page()
 
         '''
@@ -63,8 +63,12 @@ async def run(playwright):
         await asyncio.sleep(2)
 
         # body 하위 직속 div 요소들 찾기
-        top_level_divs = body.find_all('div', recursive=False)
+#         top_level_divs = body.find_all('div', recursive=False)
+        top_level_divs = body.select("body > div")
+        print(len(top_level_divs))
         if top_level_divs:
+            div = str(top_level_divs[-1])
+            print(div[0:50])
             top_level_divs[-1].decompose() # decompose 메모리에서 완전 삭제, extract 트리에서만 삭제 반환 가능
 
         # HTML 파일로 저장
